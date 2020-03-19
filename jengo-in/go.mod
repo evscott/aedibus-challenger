@@ -1,4 +1,4 @@
-module jengo
+module jengo-in
 
 go 1.12
 

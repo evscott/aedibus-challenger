@@ -2,35 +2,68 @@ version: '3'
 
 services:
 
-  jengo:
-    container_name: jengo
-    image: jengo:latest
-    hostname: jengo
+  jengo-in:
+    container_name: jengo-in
+    image: jengo-in:latest
+    hostname: jengo-in
     build:
-      context: .
+      context: jengo-in/
       dockerfile: Dockerfile
     networks:
       - jengo-net
     ports:
-      - 9090:9090
+      - 3030:3030
+    depends_on:
+      - jenkins
+    links:
+      - jenkins
     labels:
       kompose.service.type: LoadBalancer
-    volumes:
-      - ./jenkins-data:/var/jenkins_home
 
   jenkins:
     container_name: jenkins
     image: jenkinsci/blueocean
     restart: always
     hostname: jenkins
-    ports:
-      - 7070:8080
     networks:
       - jengo-net
+    ports:
+      - 4040:8080
     depends_on:
-      - jengo
+      - jengo-out
     links:
-      - jengo
+      - jengo-out
+    volumes:
+      - ./jenkins-data:/var/jenkins_home
+
+  jengo-out:
+    container_name: jengo-out
+    image: jengo-out:latest
+    hostname: jengo-out
+    build:
+      context: jengo-out/
+      dockerfile: Dockerfile
+    networks:
+      - jengo-net
+    ports:
+      - 5050:5050
+    labels:
+      kompose.service.type: LoadBalancer
+
+  jengo-db:
+    container_name: jengo-db
+    image: postgres
+    restart: always
+    hostname: jengo-db
+    environment:
+      GET_HOST_FROM: dns
+      POSTGRES_DB: dev
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    ports:
+      - 6060:5432
+    networks:
+      - jengo-net
 
 networks:
   jengo-net:

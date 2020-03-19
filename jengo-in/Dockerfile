@@ -10,8 +10,8 @@ RUN go mod download
 
 COPY . .
 
-RUN go build -o jengo .
+RUN go build -o jengo-in .
 
-EXPOSE 9090
+EXPOSE 3030
 
-CMD ["./jengo"]
+CMD ["./jengo-in"]

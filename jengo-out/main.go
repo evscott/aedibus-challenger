@@ -15,8 +15,7 @@ func main() {
 		HandlerFunc(UploadFile)
 
 	fmt.Println("Starting...")
-
-	log.Fatal(http.ListenAndServe(":9090", router))
+	log.Fatal(http.ListenAndServe(":5050", router))
 }
 
 func UploadFile(w http.ResponseWriter, r *http.Request) {
