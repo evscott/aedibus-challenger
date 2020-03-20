@@ -1,37 +1,44 @@
 package main
 
 import (
-	"code.sajari.com/storage"
-	"context"
-	"fmt"
-	"github.com/gorilla/mux"
+	"challenger-api/routes"
 	"log"
 	"net/http"
+
+	"github.com/go-chi/chi"
+	"github.com/go-chi/chi/middleware"
+	"github.com/go-chi/render"
 )
 
+func Routes() *chi.Mux {
+	router := chi.NewRouter()
+	router.Use(
+		render.SetContentType(render.ContentTypeJSON),
+		middleware.Logger,
+		middleware.Recoverer,
+	)
+
+	router.Route("/v1", func(r chi.Router) {
+		r.Mount("/challenge", routes.Challenge())
+		r.Mount("/user", routes.User())
+	})
+
+	return router
+}
+
+func printRoutes(router *chi.Mux) {
+	walkFunc := func(method string, route string, handler http.Handler, middlewares ...func(http.Handler) http.Handler) error {
+		log.Printf("%s %s\n", method, route)
+		return nil
+	}
+	if err := chi.Walk(router, walkFunc); err != nil {
+		log.Panicf("Logging err: %s\n", err.Error())
+	}
+}
+
 func main() {
-	ctx := context.Background()
-	router := mux.NewRouter()
+	router := Routes()
+	printRoutes(router)
 
-	fmt.Println("Starting...")
-
-	local := storage.Local(".")
-	f, err := local.Open(ctx, "Dockerfile") // will open "/some/root/path/file.json"
-	if err != nil {
-		// ..
-		fmt.Printf("Error %s\n", err)
-	}
-
-	p := make([]byte, f.Size)
-	n, err := f.Read(p)
-	if err != nil {
-		fmt.Printf("Error %s\n", err)
-	}
-
-	fmt.Printf("%v %d\n", string(p), n)
-
-	// ...
-	f.Close()
-
-	log.Fatal(http.ListenAndServe(":3030", router))
+	log.Fatal(http.ListenAndServe(":2020", router))
 }
