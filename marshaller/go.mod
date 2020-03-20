@@ -1,4 +1,4 @@
-module jengo-in
+module marshaller
 
 go 1.12
 

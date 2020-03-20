@@ -10,8 +10,8 @@ RUN go mod download
 
 COPY . .
 
-RUN go build -o jengo-out .
+RUN go build -o marshaller .
 
 EXPOSE 5050
 
-CMD ["./jengo-out"]
+CMD ["./marshaller"]

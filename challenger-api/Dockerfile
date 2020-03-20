@@ -10,8 +10,8 @@ RUN go mod download
 
 COPY . .
 
-RUN go build -o jengo-in .
+RUN go build -o challenger-api .
 
-EXPOSE 3030
+EXPOSE 2020
 
-CMD ["./jengo-in"]
+CMD ["./challenger-api"]
