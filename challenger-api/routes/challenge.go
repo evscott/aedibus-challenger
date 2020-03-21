@@ -1,16 +1,15 @@
 package routes
 
 import (
-	"challenger-api/handlers"
 	"github.com/go-chi/chi"
 )
 
-func Challenge() *chi.Mux {
+func (c *Config) Challenge() *chi.Mux {
 	router := chi.NewRouter()
-	router.Post("/", handlers.CreateChallenge)
-	router.Get("/", handlers.GetChallenges)
-	router.Get("/:id", handlers.GetChallenge)
-	router.Delete("/:id", handlers.DeleteChallenge)
-	router.Get("/:id/results", handlers.GetChallengeResults)
+	router.Post("/", c.Handlers.CreateChallenge)
+	router.Get("/", c.Handlers.GetChallenges)
+	router.Get("/:id", c.Handlers.GetChallenge)
+	router.Delete("/:id", c.Handlers.DeleteChallenge)
+	router.Get("/:id/results", c.Handlers.GetChallengeResults)
 	return router
 }

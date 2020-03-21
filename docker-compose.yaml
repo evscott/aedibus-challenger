@@ -9,6 +9,13 @@ services:
     build:
       context: challenger-api/
       dockerfile: Dockerfile
+    environment:
+      GET_HOSTS_FROM: dns
+      PGHOST: db
+      PGPORT: 5432
+      PGDATABASE: dev
+      PGUSER: user
+      PGPASSWORD: password
     networks:
       - ac-net
     ports:

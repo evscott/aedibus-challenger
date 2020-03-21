@@ -1,14 +1,13 @@
 package routes
 
 import (
-	"challenger-api/handlers"
 	"github.com/go-chi/chi"
 )
 
-func User() *chi.Mux {
+func (c *Config) User() *chi.Mux {
 	router := chi.NewRouter()
-	router.Post("/", handlers.SignUp)
-	router.Put("/", handlers.SignIn)
-	router.Delete("/", handlers.DeleteUser)
+	router.Post("/", c.Handlers.SignUp)
+	router.Put("/", c.Handlers.SignIn)
+	router.Delete("/", c.Handlers.DeleteUser)
 	return router
 }

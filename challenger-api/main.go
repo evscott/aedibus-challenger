@@ -2,12 +2,11 @@ package main
 
 import (
 	"challenger-api/routes"
-	"log"
-	"net/http"
-
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/render"
+	"log"
+	"net/http"
 )
 
 func Routes() *chi.Mux {
@@ -18,9 +17,11 @@ func Routes() *chi.Mux {
 		middleware.Recoverer,
 	)
 
+	cRoutes := routes.Init()
+
 	router.Route("/v1", func(r chi.Router) {
-		r.Mount("/challenge", routes.Challenge())
-		r.Mount("/user", routes.User())
+		r.Mount("/challenge", cRoutes.Challenge())
+		r.Mount("/user", cRoutes.User())
 	})
 
 	return router
@@ -40,5 +41,5 @@ func main() {
 	router := Routes()
 	printRoutes(router)
 
-	log.Fatal(http.ListenAndServe(":2020", router))
+	log.Fatal(http.ListenAndServe(":3030", router))
 }
