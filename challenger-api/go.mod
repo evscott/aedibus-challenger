@@ -4,7 +4,7 @@ go 1.12
 
 require (
 	cloud.google.com/go/storage v1.6.0 // indirect
-	code.sajari.com/storage v1.0.0 // indirect
+	code.sajari.com/storage v1.0.0
 	github.com/go-chi/chi v4.0.3+incompatible
 	github.com/go-chi/render v1.0.1
 	github.com/go-pg/pg/v9 v9.1.3
