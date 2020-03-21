@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"challenger-api/fal"
 	"challenger-api/models"
 	"fmt"
 	"github.com/go-chi/render"
@@ -13,6 +14,12 @@ func (c *Config) CreateChallenge(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Printf("%v\n", err)
 	}
+
+	err = fal.CreateFile(fal.Instructions, "blah.txt", []byte("bananas"))
+	if err != nil {
+		fmt.Printf("%v\n", err)
+	}
+
 	render.JSON(w, r, challenge)
 }
 
