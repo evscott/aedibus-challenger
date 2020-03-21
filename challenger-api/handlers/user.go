@@ -8,15 +8,19 @@ import (
 )
 
 func (c *Config) SignUp(w http.ResponseWriter, r *http.Request) {
-	user := &models.User{
-		Name:     "user",
-		Email:    "user",
-		Password: "user",
-	}
-	err := c.DAL.CreateUser(user)
+
+	// Decode user
+	user := &models.User{}
+	err := DecodeRequestBody(user, r)
 	if err != nil {
 		fmt.Printf("%v\n", err)
 	}
+
+	err = c.DAL.CreateUser(user)
+	if err != nil {
+		fmt.Printf("%v\n", err)
+	}
+
 	render.JSON(w, r, user)
 }
 

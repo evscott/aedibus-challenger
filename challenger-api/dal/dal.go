@@ -6,15 +6,15 @@ import (
 	"os"
 )
 
-type DAL struct {
+type Config struct {
 	db *pg.DB
 }
 
-func Init() *DAL {
+func Init() *Config {
 
 	fmt.Printf("Connecting to database...\n")
 
-	dal := &DAL{
+	dal := &Config{
 		db: pg.Connect(&pg.Options{
 			Addr:     fmt.Sprintf("%s:%s", os.Getenv("PGHOST"), os.Getenv("PGPORT")),
 			User:     os.Getenv("PGUSER"),

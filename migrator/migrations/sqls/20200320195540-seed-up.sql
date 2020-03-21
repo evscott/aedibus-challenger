@@ -10,15 +10,14 @@ CREATE TABLE IF NOT EXISTS Users (
 
 CREATE TABLE IF NOT EXISTS Challenges (
     id uuid DEFAULT uuid_generate_v1() UNIQUE,
-    aid uuid REFERENCES Users(id) NOT NULL,
-    cid uuid REFERENCES Users(id) NOT NULL,
+    creator_id uuid REFERENCES Users(id) NOT NULL,
+    challenger_id uuid REFERENCES Users(id) NOT NULL,
     PRIMARY KEY (id)
 );
 
 CREATE TABLE IF NOT EXISTS Challenge_Results (
-    cid uuid REFERENCES Challenges(id) NOT NULL,
-    uid uuid REFERENCES Users(id) NOT NULL,
+    challenge_id uuid REFERENCES Challenges(id) NOT NULL,
     tests_ran integer not null,
     test_passed integer not null,
-    PRIMARY KEY (cid, uid)
+    PRIMARY KEY (challenge_id)
 );

@@ -9,21 +9,27 @@ import (
 type FileType string
 
 const (
-	Instructions FileType = "./instructions"
-	Tests        FileType = "./tests"
+	README FileType = "README.md"
+	Tests  FileType = "tests.java"
 )
 
-func GetFile(ft FileType, cid string) ([]byte, error) {
+type Config struct{}
+
+func Init() *Config {
+	return &Config{}
+}
+
+func (c *Config) GetFile(ft FileType, cid string) ([]byte, error) {
 	ctx := context.Background()
 
-	local := storage.Local(ft)
-	f, err := local.Open(ctx, fmt.Sprintf("%s", cid))
+	local := storage.Local(fmt.Sprintf("./%s", cid))
+	f, err := local.Open(ctx, string(ft))
 	if err != nil {
 		return nil, err
 	}
 
-	instructions := make([]byte, f.Size)
-	n, err := f.Read(instructions)
+	readme := make([]byte, f.Size)
+	_, err = f.Read(readme)
 	if err != nil {
 		return nil, err
 	}
@@ -33,19 +39,19 @@ func GetFile(ft FileType, cid string) ([]byte, error) {
 		return nil, err
 	}
 
-	return instructions, nil
+	return readme, nil
 }
 
-func CreateFile(ft FileType, cid string, instructions []byte) error {
+func (c *Config) CreateFile(ft FileType, cid string, file []byte) error {
 	ctx := context.Background()
 
-	local := storage.Local(ft)
-	f, err := local.Create(ctx, fmt.Sprintf("%s", cid))
+	local := storage.Local(fmt.Sprintf("./%s", cid))
+	f, err := local.Create(ctx, string(ft))
 	if err != nil {
 		return err
 	}
 
-	_, err = f.Write(instructions)
+	_, err = f.Write(file)
 	if err != nil {
 		return err
 	}
@@ -58,11 +64,11 @@ func CreateFile(ft FileType, cid string, instructions []byte) error {
 	return nil
 }
 
-func DeleteFile(ft FileType, cid string) error {
+func (c *Config) DeleteFile(ft FileType, cid string) error {
 	ctx := context.Background()
 
-	local := storage.Local(ft)
-	err := local.Delete(ctx, fmt.Sprintf("%s", cid))
+	local := storage.Local(fmt.Sprintf("./%s", cid))
+	err := local.Delete(ctx, string(ft))
 	if err != nil {
 		return err
 	}

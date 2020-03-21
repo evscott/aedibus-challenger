@@ -9,13 +9,39 @@ import (
 )
 
 func (c *Config) CreateChallenge(w http.ResponseWriter, r *http.Request) {
-	challenge := &models.Challenge{}
-	err := c.DAL.CreateChallenge(challenge)
+	(w).Header().Set("Access-Control-Allow-Origin", "*")
+
+	creatorID, err := DecodeRequestFormText("creatorID", r)
+	if err != nil {
+		fmt.Printf("%v\n", err)
+	}
+	challengerID, err := DecodeRequestFormText("challengerID", r)
+	if err != nil {
+		fmt.Printf("%v\n", err)
+	}
+	challenge := &models.Challenge{
+		CreatorID:    creatorID,
+		ChallengerID: challengerID,
+	}
+
+	readme, err := DecodeRequestFormFile("README.md", r)
+	if err != nil {
+		fmt.Printf("%v\n", err)
+	}
+	tests, err := DecodeRequestFormFile("tests.java", r)
 	if err != nil {
 		fmt.Printf("%v\n", err)
 	}
 
-	err = fal.CreateFile(fal.Instructions, "blah.txt", []byte("bananas"))
+	err = c.DAL.CreateChallenge(challenge)
+	if err != nil {
+		fmt.Printf("%v\n", err)
+	}
+	err = c.FAL.CreateFile(fal.README, challenge.ID, readme)
+	if err != nil {
+		fmt.Printf("%v\n", err)
+	}
+	err = c.FAL.CreateFile(fal.Tests, challenge.ID, tests)
 	if err != nil {
 		fmt.Printf("%v\n", err)
 	}
