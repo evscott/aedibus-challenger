@@ -6,8 +6,9 @@ import (
 
 func (c *Config) User() *chi.Mux {
 	router := chi.NewRouter()
+
 	router.Post("/", c.Handlers.SignUp)
 	router.Put("/", c.Handlers.SignIn)
-	router.Delete("/", c.Handlers.DeleteUser)
+
 	return router
 }

@@ -11,11 +11,16 @@ func (d *Config) DeleteChallenge(challenge *models.Challenge) error {
 	return err
 }
 
-func (d *Config) GetChallenge(challenge *models.Challenge) error {
-	return d.db.Model(challenge).WherePK().Select()
+func (d *Config) GetChallenge(challenge *models.Challenge, userID string) error {
+	return d.db.Model(challenge).
+		WherePK().
+		Where("creator_id = ? or challenger_id = ?", userID, userID).
+		Select()
 }
 
-func (d *Config) GetChallenges() (models.Challenges, error) {
-	challenges := models.Challenges{}
-	return challenges, d.db.Model(challenges).Select()
+func (d *Config) GetChallenges(userID string) (*models.Challenges, error) {
+	challenges := &models.Challenges{}
+	return challenges, d.db.Model(challenges).
+		Where("creator_id = ? or challenger_id = ?", userID, userID).
+		Select()
 }

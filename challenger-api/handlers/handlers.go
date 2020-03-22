@@ -5,6 +5,7 @@ import (
 	"challenger-api/fal"
 	"encoding/json"
 	"fmt"
+	"github.com/go-chi/chi"
 	"io/ioutil"
 	"net/http"
 )
@@ -23,6 +24,14 @@ func Init() *Config {
 }
 
 /* Handler Helpers */
+
+func GetURLQuery(key string, r *http.Request) (string, error) {
+	value := chi.URLParam(r, key)
+	if len(value) < 1 {
+		return "", fmt.Errorf("Url key %s was missing\n", key)
+	}
+	return value, nil
+}
 
 func DecodeRequestFormText(key string, r *http.Request) (string, error) {
 	value := r.FormValue(key)

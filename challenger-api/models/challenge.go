@@ -1,15 +1,23 @@
 package models
 
 type Challenge struct {
-	ID           string `json:"id",pg:"id"`
-	ChallengerID string `json:"challengerID",pg:"challenger_id"`
-	CreatorID    string `json:"creatorID",pg:"creator_id"`
+	ID           string `pg:"id"`
+	ChallengerID string `pg:"challenger_id"`
+	CreatorID    string `pg:"creator_id"`
 }
 
 type Challenges []Challenge
 
 type ChallengeResults struct {
-	ChallengeID string `json:"challengeID",pg:"challenge_id"`
-	TestsRan    string `json:"testsRan",pg:"tests_ran"`
-	TestsPassed string `json:"testsPassed",pg:"tests_passed"`
+	ChallengeID string `pg:"challenge_id"`
+	TestsRan    string `pg:"tests_ran"`
+	TestsPassed string `pg:"tests_passed"`
+}
+
+type GetChallengeRes struct {
+	ID           string `json:"id"`
+	ChallengerID string `json:"challengerID"`
+	CreatorID    string `json:"creatorID"`
+	Tests        []byte `json:"tests"`
+	README       []byte `json:"readme"`
 }
