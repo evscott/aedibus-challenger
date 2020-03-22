@@ -20,8 +20,8 @@ func Routes() *chi.Mux {
 	cRoutes := routes.Init()
 
 	router.Route("/v1", func(r chi.Router) {
-		r.Mount("/challenge", cRoutes.Challenge())
-		r.Mount("/user", cRoutes.User())
+		r.Mount("/u", cRoutes.User())
+		r.Mount("/", cRoutes.Open())
 	})
 
 	return router
