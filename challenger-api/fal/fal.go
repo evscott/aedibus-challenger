@@ -1,9 +1,10 @@
 package fal
 
 import (
-	"code.sajari.com/storage"
 	"context"
 	"fmt"
+
+	"code.sajari.com/storage"
 )
 
 type FileType string
@@ -22,7 +23,7 @@ func Init() *Config {
 func (c *Config) GetFile(ft FileType, cid string) ([]byte, error) {
 	ctx := context.Background()
 
-	local := storage.Local(fmt.Sprintf("./%s", cid))
+	local := storage.Local(fmt.Sprintf("./challenges/%s", cid))
 	f, err := local.Open(ctx, string(ft))
 	if err != nil {
 		return nil, err
@@ -45,7 +46,7 @@ func (c *Config) GetFile(ft FileType, cid string) ([]byte, error) {
 func (c *Config) CreateFile(ft FileType, cid string, file []byte) error {
 	ctx := context.Background()
 
-	local := storage.Local(fmt.Sprintf("./%s", cid))
+	local := storage.Local(fmt.Sprintf("./challenges/%s", cid))
 	f, err := local.Create(ctx, string(ft))
 	if err != nil {
 		return err

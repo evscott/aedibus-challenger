@@ -2,8 +2,9 @@ package dal
 
 import (
 	"fmt"
-	"github.com/go-pg/pg/v9"
 	"os"
+
+	"github.com/go-pg/pg/v9"
 )
 
 type Config struct {

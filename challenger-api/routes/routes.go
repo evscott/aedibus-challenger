@@ -5,8 +5,9 @@ import (
 	"challenger-api/jwt_helpers"
 	"context"
 	"fmt"
-	"github.com/go-chi/chi"
 	"net/http"
+
+	"github.com/go-chi/chi"
 )
 
 type Config struct {
@@ -17,14 +18,14 @@ func Init() *Config {
 	routes := &Config{
 		Handlers: handlers.Init(),
 	}
+
 	return routes
 }
 
 func (c *Config) Open() *chi.Mux {
 	router := chi.NewRouter()
-
-	router.Post("/", c.Handlers.SignUp)
-	router.Put("/", c.Handlers.SignIn)
+	router.Post("/auth", c.Handlers.SignUp)
+	router.Put("/auth", c.Handlers.SignIn)
 
 	return router
 }
@@ -38,7 +39,8 @@ func (c *Config) User() *chi.Mux {
 	router.Get("/challenge/{id}/{fileType}", c.Handlers.GetChallengeFile)
 	router.Delete("/challenge/{id}", c.Handlers.DeleteChallenge)
 	router.Get("/challenge/{id}/results", c.Handlers.GetChallengeResults)
-	router.Delete("/", c.Handlers.DeleteUser)
+	router.Delete("/user", c.Handlers.DeleteUser)
+	router.Post("/attempt", c.Handlers.AttemptChallenge)
 
 	return router
 }

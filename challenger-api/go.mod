@@ -5,6 +5,7 @@ go 1.12
 require (
 	cloud.google.com/go/storage v1.6.0 // indirect
 	code.sajari.com/storage v1.0.0
+	github.com/dghubble/sling v1.3.0 // indirect
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/go-chi/chi v4.0.3+incompatible
 	github.com/go-chi/render v1.0.1

@@ -4,13 +4,14 @@ import (
 	"challenger-api/jwt_helpers"
 	"challenger-api/models"
 	"fmt"
-	"github.com/go-chi/render"
 	"net/http"
+
+	"github.com/go-chi/render"
 )
 
 func (c *Config) SignUp(w http.ResponseWriter, r *http.Request) {
 	user := &models.User{}
-	err := DecodeRequestBody(user, r)
+	err := decodeRequestBody(user, r)
 	if err != nil {
 		fmt.Printf("%v\n", err)
 	}
@@ -37,7 +38,7 @@ func (c *Config) SignUp(w http.ResponseWriter, r *http.Request) {
 
 func (c *Config) SignIn(w http.ResponseWriter, r *http.Request) {
 	user := &models.User{}
-	err := DecodeRequestBody(user, r)
+	err := decodeRequestBody(user, r)
 	if err != nil {
 		fmt.Printf("%v\n", err)
 	}

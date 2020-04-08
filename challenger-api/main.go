@@ -2,11 +2,12 @@ package main
 
 import (
 	"challenger-api/routes"
+	"log"
+	"net/http"
+
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/render"
-	"log"
-	"net/http"
 )
 
 func Routes() *chi.Mux {

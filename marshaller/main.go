@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
-	"github.com/gorilla/mux"
 	"log"
 	"net/http"
+
+	"github.com/gorilla/mux"
 )
 
 func main() {
@@ -28,7 +29,7 @@ func UploadFile(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	file, _, err := r.FormFile("SimpleTest")
+	file, _, err := r.FormFile("ChallengeResults.xml")
 	defer file.Close()
 	if err != nil {
 		w.Write([]byte(err.Error()))
