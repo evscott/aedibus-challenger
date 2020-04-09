@@ -64,7 +64,7 @@ func encodeResponseBody(body interface{}, w http.ResponseWriter) error {
 	return json.NewEncoder(w).Encode(body)
 }
 
-func encodeChallengeFormData(uri string, attemptContents, testsContents []byte) (*http.Request, error) {
+func encodeChallengeFormData(uri, challengeID string, attemptContents, testsContents []byte) (*http.Request, error) {
 
 	// Get pom.xml contents
 	pomFile, err := os.Open("./challenges/pom.xml")
@@ -84,6 +84,12 @@ func encodeChallengeFormData(uri string, attemptContents, testsContents []byte) 
 	// Open new multipart form-data writer
 	body := new(bytes.Buffer)
 	writer := multipart.NewWriter(body)
+
+	// Write challengeID string to form
+	err = writer.WriteField("challengeID", challengeID)
+	if err != nil {
+		return nil, err
+	}
 
 	// Write pom.xml, Tests.java, and Attempt.java contents to multipart form-data
 	pomForm, err := writer.CreateFormFile("pom.xml", "pom.xml")

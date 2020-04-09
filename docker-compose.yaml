@@ -21,6 +21,28 @@ services:
     networks:
       - ac-net
     ports:
+      - 2020:2020
+    depends_on:
+      - jenkins
+    links:
+      - jenkins
+    labels:
+      kompose.service.type: LoadBalancer
+    volumes:
+      - ./challenges:/challenges
+
+    challenger-wc:
+    container_name: challenger-wc
+    image: challenger-wc:latest
+    hostname: challenger-wc
+    build:
+      context: challenger-wc/
+      dockerfile: Dockerfile
+    environment:
+      GET_HOSTS_FROM: dns
+    networks:
+      - ac-net
+    ports:
       - 3030:3030
     depends_on:
       - jenkins

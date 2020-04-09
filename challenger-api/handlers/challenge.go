@@ -107,11 +107,11 @@ func (c *Config) GetChallengeResults(w http.ResponseWriter, r *http.Request) {
 func (c *Config) AttemptChallenge(w http.ResponseWriter, r *http.Request) {
 
 	// Decode incoming request form data
-	attemptContents, err := decodeRequestFormFile("Attempt.java", r)
+	challengeID, err := decodeRequestFormText("challengeID", r)
 	if err != nil {
 		fmt.Printf("%v\n", err)
 	}
-	challengeID, err := decodeRequestFormText("challengeID", r)
+	attemptContents, err := decodeRequestFormFile("Attempt.java", r)
 	if err != nil {
 		fmt.Printf("%v\n", err)
 	}
@@ -123,7 +123,7 @@ func (c *Config) AttemptChallenge(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Send challenge request to Jenkins
-	request, err := encodeChallengeFormData("http://admin:118b1cf6081be7f5c9ea7e059fce2da332@jenkins:8080/job/java-jobs/buildWithParameters/?token=abc", attemptContents, testsContents)
+	request, err := encodeChallengeFormData("http://admin:118b1cf6081be7f5c9ea7e059fce2da332@jenkins:8080/job/java-jobs/buildWithParameters/?token=abc", challengeID, attemptContents, testsContents)
 	if err != nil {
 		fmt.Print(err)
 	}
