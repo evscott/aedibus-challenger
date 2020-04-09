@@ -11,7 +11,7 @@ type FileType string
 
 const (
 	README FileType = "README.md"
-	Tests  FileType = "tests.java"
+	Tests  FileType = "Tests.java"
 )
 
 type Config struct{}

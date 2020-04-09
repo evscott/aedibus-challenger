@@ -13,7 +13,7 @@ public class Tests {
 
     @Test
     public void testNumber10() {
-        assertEquals(10, Attempt.getNumber10());
+        assertEquals(11, Attempt.getNumber10());
     }
 
 }

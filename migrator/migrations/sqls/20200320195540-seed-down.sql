@@ -1,3 +1,4 @@
-DROP TABLE IF EXISTS Challenge_Results;
+DROP TABLE IF EXISTS Tests;
 DROP TABLE IF EXISTS Challenges;
 DROP TABLE IF EXISTS Users;
+DROP TYPE challenge_state;

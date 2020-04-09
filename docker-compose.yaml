@@ -55,7 +55,7 @@ services:
     environment:
       GET_HOSTS_FROM: dns
       PGHOST: db
-      PGPORT: 6060
+      PGPORT: 5432
       PGDATABASE: dev
       PGUSER: user
       PGPASSWORD: password
