@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-export default props => {
+const TestResults = (props) => {
     const classes = useStyles()
     const { tests } = props
 

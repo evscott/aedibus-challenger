@@ -1,8 +1,6 @@
-import {
-    createMuiTheme,
-} from '@material-ui/core/styles'
+import { createMuiTheme } from '@material-ui/core/styles'
 
-let t = createMuiTheme({
+let theme = createMuiTheme({
     palette: {
         primary: {
             light: '#63ccff',
@@ -30,10 +28,11 @@ let t = createMuiTheme({
             minHeight: 48,
         },
     },
+    drawerWidth: 256,
 })
 
-export const Theeeme = {
-    ...t,
+export default theme = {
+    ...theme,
     overrides: {
         MuiDrawer: {
             paper: {
@@ -53,7 +52,7 @@ export const Theeeme = {
         },
         MuiTabs: {
             root: {
-                marginLeft: t.spacing(1),
+                marginLeft: theme.spacing(1),
             },
             indicator: {
                 height: 3,
@@ -68,7 +67,7 @@ export const Theeeme = {
                 margin: '0 16px',
                 minWidth: 0,
                 padding: 0,
-                [t.breakpoints.up('md')]: {
+                [theme.breakpoints.up('md')]: {
                     padding: 0,
                     minWidth: 0,
                 },
@@ -76,7 +75,7 @@ export const Theeeme = {
         },
         MuiIconButton: {
             root: {
-                padding: t.spacing(1),
+                padding: theme.spacing(1),
             },
         },
         MuiTooltip: {

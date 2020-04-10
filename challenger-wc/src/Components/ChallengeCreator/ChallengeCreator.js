@@ -1,10 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {
-    createMuiTheme,
-    ThemeProvider,
-    withStyles,
-} from '@material-ui/core/styles'
+import { ThemeProvider, withStyles} from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Hidden from '@material-ui/core/Hidden'
 import { Header, Footer, Sidebar } from '../Shared/Layouts'
@@ -19,123 +15,12 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import InviteChallengerForm from './InviteChallengerForm'
-
-let theme = createMuiTheme({
-    palette: {
-        primary: {
-            light: '#63ccff',
-            main: '#009be5',
-            dark: '#006db3',
-        },
-    },
-    typography: {
-        h5: {
-            fontWeight: 500,
-            fontSize: 26,
-            letterSpacing: 0.5,
-        },
-    },
-    shape: {
-        borderRadius: 8,
-    },
-    props: {
-        MuiTab: {
-            disableRipple: true,
-        },
-    },
-    mixins: {
-        toolbar: {
-            minHeight: 48,
-        },
-    },
-})
-
-theme = {
-    ...theme,
-    overrides: {
-        MuiDrawer: {
-            paper: {
-                backgroundColor: '#18202c',
-            },
-        },
-        MuiButton: {
-            label: {
-                textTransform: 'none',
-            },
-            contained: {
-                boxShadow: 'none',
-                '&:active': {
-                    boxShadow: 'none',
-                },
-            },
-        },
-        MuiTabs: {
-            root: {
-                marginLeft: theme.spacing(1),
-            },
-            indicator: {
-                height: 3,
-                borderTopLeftRadius: 3,
-                borderTopRightRadius: 3,
-                backgroundColor: theme.palette.common.white,
-            },
-        },
-        MuiTab: {
-            root: {
-                textTransform: 'none',
-                margin: '0 16px',
-                minWidth: 0,
-                padding: 0,
-                [theme.breakpoints.up('md')]: {
-                    padding: 0,
-                    minWidth: 0,
-                },
-            },
-        },
-        MuiIconButton: {
-            root: {
-                padding: theme.spacing(1),
-            },
-        },
-        MuiTooltip: {
-            tooltip: {
-                borderRadius: 4,
-            },
-        },
-        MuiDivider: {
-            root: {
-                backgroundColor: '#404854',
-            },
-        },
-        MuiListItemText: {
-            primary: {
-                fontWeight: theme.typography.fontWeightMedium,
-            },
-        },
-        MuiListItemIcon: {
-            root: {
-                color: 'inherit',
-                marginRight: 0,
-                '& svg': {
-                    fontSize: 20,
-                },
-            },
-        },
-        MuiAvatar: {
-            root: {
-                width: 32,
-                height: 32,
-            },
-        },
-    },
-}
-
-const drawerWidth = 256
+import theme from '../Theme'
 
 const styles = {
     fabBackward: {
         position: "fixed",
-        left: drawerWidth+20,
+        left: theme.drawerWidth+20,
         bottom: 20
     },
     fabForward: {
@@ -149,7 +34,7 @@ const styles = {
     },
     drawer: {
         [theme.breakpoints.up('sm')]: {
-            width: drawerWidth,
+            width: theme.drawerWidth,
             flexShrink: 0,
         },
     },
@@ -170,7 +55,7 @@ const styles = {
     },
 }
 
-function ChallengeCreator(props) {
+const ChallengeCreator = (props) => {
     const { classes } = props;
 
     const [stage, setStage] = React.useState(0);
@@ -244,11 +129,10 @@ function ChallengeCreator(props) {
         <ThemeProvider theme={theme}>
             <div className={classes.root}>
                 <CssBaseline />
-                {/* Sidebar Navigation */}
                 <nav className={classes.drawer}>
                     <Hidden xsDown implementation="css">
                         <Sidebar
-                            PaperProps={{ style: { width: drawerWidth } }}
+                            PaperProps={{ style: { width: theme.drawerWidth } }}
                         />
                     </Hidden>
                 </nav>

@@ -25,7 +25,7 @@ const styles = {
     },
 }
 
-function InviteChallengerForm(props) {
+const InviteChallengerForm = (props) => {
     const { classes } = props;
     const history = useHistory()
 

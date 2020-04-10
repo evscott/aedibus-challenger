@@ -1,10 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {
-    createMuiTheme,
-    ThemeProvider,
-    withStyles,
-} from '@material-ui/core/styles'
+import { ThemeProvider, withStyles} from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Hidden from '@material-ui/core/Hidden'
 import Grid from '@material-ui/core/Grid'
@@ -17,122 +13,11 @@ import Typography from '@material-ui/core/Typography'
 import SendIcon from '@material-ui/icons/Send';
 import Fab from "@material-ui/core/Fab";
 import TestResults from './TestsResults'
-import Instructions from './Instructions'
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
-
-let theme = createMuiTheme({
-    palette: {
-        primary: {
-            light: '#63ccff',
-            main: '#009be5',
-            dark: '#006db3',
-        },
-    },
-    typography: {
-        h5: {
-            fontWeight: 500,
-            fontSize: 26,
-            letterSpacing: 0.5,
-        },
-    },
-    shape: {
-        borderRadius: 8,
-    },
-    props: {
-        MuiTab: {
-            disableRipple: true,
-        },
-    },
-    mixins: {
-        toolbar: {
-            minHeight: 48,
-        },
-    },
-})
-
-theme = {
-    ...theme,
-    overrides: {
-        MuiDrawer: {
-            paper: {
-                backgroundColor: '#18202c',
-            },
-        },
-        MuiButton: {
-            label: {
-                textTransform: 'none',
-            },
-            contained: {
-                boxShadow: 'none',
-                '&:active': {
-                    boxShadow: 'none',
-                },
-            },
-        },
-        MuiTabs: {
-            root: {
-                marginLeft: theme.spacing(1),
-            },
-            indicator: {
-                height: 3,
-                borderTopLeftRadius: 3,
-                borderTopRightRadius: 3,
-                backgroundColor: theme.palette.common.white,
-            },
-        },
-        MuiTab: {
-            root: {
-                textTransform: 'none',
-                margin: '0 16px',
-                minWidth: 0,
-                padding: 0,
-                [theme.breakpoints.up('md')]: {
-                    padding: 0,
-                    minWidth: 0,
-                },
-            },
-        },
-        MuiIconButton: {
-            root: {
-                padding: theme.spacing(1),
-            },
-        },
-        MuiTooltip: {
-            tooltip: {
-                borderRadius: 4,
-            },
-        },
-        MuiDivider: {
-            root: {
-                backgroundColor: '#404854',
-            },
-        },
-        MuiListItemText: {
-            primary: {
-                fontWeight: theme.typography.fontWeightMedium,
-            },
-        },
-        MuiListItemIcon: {
-            root: {
-                color: 'inherit',
-                marginRight: 0,
-                '& svg': {
-                    fontSize: 20,
-                },
-            },
-        },
-        MuiAvatar: {
-            root: {
-                width: 32,
-                height: 32,
-            },
-        },
-    },
-}
-
-const drawerWidth = 256
+import theme from '../Theme'
+import ReactMarkdown from 'react-markdown'
 
 const styles = {
     root: {
@@ -141,7 +26,7 @@ const styles = {
     },
     drawer: {
         [theme.breakpoints.up('sm')]: {
-            width: drawerWidth,
+            width: theme.drawerWidth,
             flexShrink: 0,
         },
     },
@@ -155,6 +40,12 @@ const styles = {
         padding: theme.spacing(6, 4),
         background: '#eaeff1',
     },
+    instructions: {
+        backgroundColor: 'lightgray',
+        height: '730px',
+        overflow: 'auto',
+        padding: '0px 25px 0px 25px'
+    },
     CodeMirror: {
         height: 800,
         padding: '10px',
@@ -162,20 +53,6 @@ const styles = {
     InstructionsPaper: {
         padding: '10px',
         height: '800px',
-    },
-    button: {
-        margin: theme.spacing(1),
-        right: '0px',
-        bottom: '0px'
-    },
-    assignmentTitle: {
-        marginTop: '8px'
-    },
-    createTab: {
-        marginTop: '8px'
-    },
-    buttons: {
-        marginTop: '8px'
     },
     fab: {
         position: "fixed",
@@ -205,7 +82,7 @@ const tests = [
     },
 ]
 
-function ChallengeViewer(props) {
+const ChallengeViewer = (props) => {
     const { classes } = props
 
     const [focusResults, toggleFocus] = React.useState(0);
@@ -246,7 +123,8 @@ function ChallengeViewer(props) {
     const getRightContent = () => {
         if (focusResults)
             return <TestResults tests={tests} />
-        return <Instructions/>
+        return  <ReactMarkdown source={'# Instructions go here'} className={classes.instructions}/>
+
     }
 
     const getButton = () => {
@@ -267,20 +145,17 @@ function ChallengeViewer(props) {
         <ThemeProvider theme={theme}>
             <div className={classes.root}>
                 <CssBaseline />
-                {/* Sidebar Navigation */}
                 <nav className={classes.drawer}>
                     <Hidden xsDown implementation="css">
                         <Sidebar
-                            PaperProps={{ style: { width: drawerWidth } }}
+                            PaperProps={{ style: { width: theme.drawerWidth } }}
                         />
                     </Hidden>
                 </nav>
                 <div className={classes.app}>
                     <Header />
-                    {/* Assignment Contents */}
                     <main className={classes.main}>
                         <Grid container spacing={3}>
-                            {/* Code Editor */}
                             <Grid item lg={6} md={12} xs={12}>
                                 <Paper className={classes.CodeMirror}>
                                     {getLeftAppbar()}

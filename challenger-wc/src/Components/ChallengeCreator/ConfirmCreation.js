@@ -10,31 +10,23 @@ import Typography from "@material-ui/core/Typography";
 import ReactMarkdown from "react-markdown";
 
 const styles = {
-    fab: {
-        position: "fixed",
-        right: 20,
-        bottom: 20,
-    },
-    Instructions: {
+    instructions: {
         backgroundColor: "lightgray",
         height: "730px",
         overflow: "auto",
         padding: "0px 25px 0px 25px",
     },
-    CodeMirror: {
-        height: 800,
+    leftPaper: {
+        height: "800px",
         padding: "10px",
     },
-    InstructionsPaper: {
+    rightPaper: {
         padding: "10px",
         height: "800px",
     },
-    assignmentTitle: {
-        marginTop: "8px",
-    },
 };
 
-function ConfirmCreation(props) {
+const ConfirmCreation = (props) => {
     const { classes } = props;
 
     const [content, setContent] = React.useState("# Some instructions");
@@ -42,23 +34,37 @@ function ConfirmCreation(props) {
         setContent(c);
     };
 
+    const getLeftAppbar = () => {
+        return (
+            <AppBar position="relative" color="default">
+                <Toolbar>
+                    <Grid container>
+                        <Typography variant={"h6"} color={"textSecondary"}>
+                            Tests.java
+                        </Typography>
+                    </Grid>
+                </Toolbar>
+            </AppBar>
+        );
+    };
+
+    const getRightAppbar = () => {
+        return (
+            <AppBar position="relative" color="default">
+                <Toolbar>
+                    <Typography variant={"h6"} color={"textSecondary"}>
+                        README.md
+                    </Typography>
+                </Toolbar>
+            </AppBar>
+        );
+    };
+
     return (
         <Grid container spacing={3}>
-            {/* Code Editor */}
             <Grid item lg={6} md={12} xs={12}>
-                <Paper className={classes.CodeMirror}>
-                    <AppBar position="relative" color="default">
-                        <Toolbar>
-                            <Grid container>
-                                <Typography
-                                    variant={"h6"}
-                                    color={"textSecondary"}
-                                >
-                                    Tests.java
-                                </Typography>
-                            </Grid>
-                        </Toolbar>
-                    </AppBar>
+                <Paper className={classes.leftPaper}>
+                    {getLeftAppbar()}
                     <Editor
                         mode="javascript"
                         value={'console.log("Some tests")'}
@@ -67,23 +73,17 @@ function ConfirmCreation(props) {
                 </Paper>
             </Grid>
             <Grid item lg={6} md={12} xs={12}>
-                <Paper className={classes.InstructionsPaper}>
-                    <AppBar position="relative" color="default">
-                        <Toolbar>
-                            <Typography variant={"h6"} color={"textSecondary"}>
-                                README.md
-                            </Typography>
-                        </Toolbar>
-                    </AppBar>
+                <Paper className={classes.rightPaper}>
+                    {getRightAppbar()}
                     <ReactMarkdown
                         source={content}
-                        className={classes.Instructions}
+                        className={classes.instructions}
                     />
                 </Paper>
             </Grid>
         </Grid>
     );
-}
+};
 
 ConfirmCreation.propTypes = {
     classes: PropTypes.object.isRequired,
