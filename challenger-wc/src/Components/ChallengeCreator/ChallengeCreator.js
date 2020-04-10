@@ -7,12 +7,17 @@ import {
 } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Hidden from '@material-ui/core/Hidden'
-import Grid from '@material-ui/core/Grid'
-import ChallengesCard from './ChallengesCard/ChallengesCard'
 import { Header, Footer, Sidebar } from '../Shared/Layouts'
-import AddIcon from "@material-ui/icons/Add";
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import Fab from "@material-ui/core/Fab";
-import { useHistory } from 'react-router-dom'
+import ReadmeCreator from './ReadmeCreator'
+import TestsCreator from './TestsCreator'
+import ConfirmCreation from './ConfirmCreation'
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import AddIcon from "@material-ui/icons/Add";
+import Modal from '@material-ui/core/Modal';
+import Backdrop from '@material-ui/core/Backdrop';
+import Fade from '@material-ui/core/Fade';
 
 let theme = createMuiTheme({
     palette: {
@@ -127,6 +132,16 @@ theme = {
 const drawerWidth = 256
 
 const styles = {
+    fabBackward: {
+        position: "fixed",
+        left: drawerWidth+20,
+        bottom: 20
+    },
+    fabForward: {
+        position: "fixed",
+        right: 20,
+        bottom: 20
+    },
     root: {
         display: 'flex',
         minHeight: '100vh',
@@ -157,20 +172,79 @@ const styles = {
         border: '2px solid #000',
         boxShadow: theme.shadows[5],
         padding: theme.spacing(2, 4, 3),
-    },
-    fab: {
-        position: "fixed",
-        right: 20,
-        bottom: 20
-      },
+    }
 }
 
-function Dashboard(props) {
-    const { classes } = props
-    const history = useHistory()
+function ChallengeCreator(props) {
+    const { classes } = props;
 
-    const onSelect = () => {
-        history.push('/challenge/create')
+    const [stage, setStage] = React.useState(0);
+    const handleChange = s => {
+        setStage(s);
+    }
+
+    const [open, toggle] = React.useState(false);
+  
+    const toggleModal = () => {
+        toggle(!open);
+    };
+
+    const getBackButton = () => {
+        if (stage === 0) return;
+        return (
+            <Fab className={classes.fabBackward} color="primary" onClick={() => {handleChange(stage-1)}}>
+                <ArrowBackIcon />
+            </Fab>
+        );
+    }
+
+    const getForwardButton = () => {
+        if (stage === 2) 
+            return (
+                <Fab className={classes.fabForward} color="primary" onClick={toggleModal}>
+                    <AddIcon />
+                </Fab>);
+        return (
+            <Fab className={classes.fabForward} color="primary" onClick={() => {handleChange(stage+1)}}>
+                <ArrowForwardIcon />
+            </Fab>
+        );
+    }
+
+    const getConfirmationModal = () => {
+        return (
+            <Modal
+            aria-labelledby="transition-modal-title"
+            aria-describedby="transition-modal-description"
+            className={classes.modal}
+            open={open}
+            onClose={toggleModal}
+            closeAfterTransition
+            BackdropComponent={Backdrop}
+            BackdropProps={{
+                timeout: 500,
+            }}
+        >
+            <Fade in={open}>
+                <div className={classes.paper}>
+                    <h2 id="transition-modal-title">Create challenge confirmation goes here</h2>
+                </div>
+            </Fade>
+        </Modal>
+        );
+    }
+
+    const getStage = () => {
+        switch (stage) {
+            case 0:
+                return <ReadmeCreator/>;
+            case 1:
+                return <TestsCreator/>;
+            case 2:
+                return <ConfirmCreation/>;
+            default:
+                return <h1>Error</h1>;
+        }
     }
 
     return (
@@ -186,19 +260,13 @@ function Dashboard(props) {
                     </Hidden>
                 </nav>
                 <div className={classes.app}>
-                    <Header/>
-                    {/* Dashboard Contents */}
+                    <Header />
                     <main className={classes.main}>
-                        <Grid container spacing={2}>
-                            <Grid item lg={3} md={2} xs={1}/>
-                            <Grid item lg={6} md={8} xs={12}>
-                                <ChallengesCard/>
-                            </Grid>
-                            <Grid item lg={3} md={2} xs={1}/>
-                        </Grid>
-                        <Fab className={classes.fab} color="primary" onClick={onSelect}>
-                            <AddIcon />
-                        </Fab>
+                        {getBackButton()}
+                        {getStage()}
+                        {getForwardButton()}
+                        {getConfirmationModal()}
+                        {getConfirmationModal()}
                     </main>
                     <Footer />
                 </div>
@@ -207,8 +275,8 @@ function Dashboard(props) {
     )
 }
 
-Dashboard.propTypes = {
+ChallengeCreator.propTypes = {
     classes: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles)(Dashboard)
+export default withStyles(styles)(ChallengeCreator)

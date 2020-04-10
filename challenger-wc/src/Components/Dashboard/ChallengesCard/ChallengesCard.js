@@ -4,15 +4,13 @@ import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
-import Button from '@material-ui/core/Button'
 import Tooltip from '@material-ui/core/Tooltip'
 import IconButton from '@material-ui/core/IconButton'
 import { withStyles } from '@material-ui/core/styles'
 import RefreshIcon from '@material-ui/icons/Refresh'
-import CourseList from './CourseList'
+import ChallengeList from './ChallengesList'
 import Typography from '@material-ui/core/Typography'
-import AddIcon from '@material-ui/icons/Add'
-import Zoom from '@material-ui/core/Zoom';
+import { useHistory } from 'react-router-dom'
 
 const styles = theme => ({
     paper: {
@@ -40,23 +38,49 @@ const styles = theme => ({
     },
 })
 
-const courses = [
+const challengesReceived = [
     {
         id: 0,
-        name: 'COMP 2631',
+        name: 'Challenge one',
+        state: 'completed',
     },
     {
         id: 1,
-        name: 'COMP 4911',
+        name: 'Challenge two',
+        state: 'running',
     },
     {
         id: 2,
-        name: 'COMP 4721',
+        name: 'Challenge three',
+        state: 'pending',
     },
 ]
 
-function CourseFinder(props) {
-    const { classes, onCourseSelect } = props
+const challengesSent = [
+    {
+        id: 0,
+        name: 'Challenge one',
+        state: 'pending',
+    },
+    {
+        id: 1,
+        name: 'Challenge two',
+        state: 'pending',
+    },
+    {
+        id: 2,
+        name: 'Challenge three',
+        state: 'pending',
+    },
+]
+
+function ChallengesCard(props) {
+    const { classes } = props
+    const history = useHistory()
+
+    const onSelect = () => {
+        history.push('/challenge')
+    }
 
     return (
         <Paper className={classes.paper}>
@@ -70,7 +94,7 @@ function CourseFinder(props) {
                     <Grid container spacing={2} alignItems="center">
                         <Grid item xs={11} md={11} lg={11}>
                             <Typography variant={'h6'} color={'textSecondary'}>
-                                Courses
+                                Challenges
                             </Typography>
                         </Grid>
                         <Grid item xs={1} md={1} lg={1}>
@@ -88,23 +112,16 @@ function CourseFinder(props) {
             </AppBar>
             <Grid container>
                 <Grid item xs={12} md={12} lg={12} className={classes.contentWrapper}>
-                    <CourseList courses={courses} onCourseSelect={onCourseSelect} />
-                </Grid>
-                <Grid item xs={11} md={11} lg={11}/>
-                <Grid item xs={1} md={1} lg={1}>
-                    <Button color="primary" size={'small'} aria-label="add">
-                        <Tooltip title={'Create course'} placement="left" TransitionComponent={Zoom}>
-                            <AddIcon />
-                        </Tooltip>
-                    </Button>
+                    <ChallengeList challenges={challengesReceived} onSelect={onSelect} subHeader={'received'}/>
+                    <ChallengeList challenges={challengesSent} onSelect={onSelect} subHeader={'sent'}/>
                 </Grid>
             </Grid>
         </Paper>
     )
 }
 
-CourseFinder.propTypes = {
-    classes: PropTypes.object.isRequired,
+ChallengesCard.propTypes = {
+    challenges: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles)(CourseFinder)
+export default withStyles(styles)(ChallengesCard)

@@ -33,14 +33,6 @@ export default props => {
                 onClose={handleClose}
             >
                 <MenuItem onClick={handleClose}>
-                    <AccountCircleIcon />
-                    Account
-                </MenuItem>
-                <MenuItem onClick={handleClose}>
-                    <SettingsIcon />
-                    Settings
-                </MenuItem>
-                <MenuItem onClick={handleClose}>
                     <EmojiPeopleIcon />
                     Logout
                 </MenuItem>

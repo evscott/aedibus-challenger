@@ -6,7 +6,7 @@ import makeStyles from '@material-ui/core/styles/makeStyles'
 const useStyles = makeStyles( () => ({
     Instructions: {
         backgroundColor: 'lightgray',
-        height: '680px',
+        height: '730px',
         overflow: 'auto',
         padding: '0px 25px 0px 25px'
     },

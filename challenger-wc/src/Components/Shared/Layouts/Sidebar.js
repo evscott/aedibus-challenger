@@ -7,31 +7,19 @@ import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
-import PeopleIcon from '@material-ui/icons/People'
-import DnsRoundedIcon from '@material-ui/icons/DnsRounded'
-import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn'
-import { Dashboard } from '@material-ui/icons'
-import AnnouncementIcon from '@material-ui/icons/Announcement';
+import CreateIcon from '@material-ui/icons/Create'
+import ListIcon from '@material-ui/icons/List';
 import { useHistory } from 'react-router-dom'
+import Typography from '@material-ui/core/Typography'
+import Grid from '@material-ui/core/Grid'
+import { Box } from '@material-ui/core'
 
 export const Categories = [
     {
-        id: 'Work',
+        id: 'Directory',
         children: [
-            { id: 'Dashboard', icon: <Dashboard />, to: '/home' },
-            { id: 'Courses', icon: <DnsRoundedIcon />, to: '/home' },
-            {
-                id: 'Submissions',
-                icon: <AssignmentTurnedInIcon />,
-                to: '/home',
-            },
-        ],
-    },
-    {
-        id: 'Social',
-        children: [
-            { id: 'Announcements', icon: <AnnouncementIcon />, to: '/home' },
-            { id: 'Students', icon: <PeopleIcon />, to: '/home' },
+            { id: 'View Challenges', icon: <ListIcon />, to: '/home' },
+            { id: 'Create Challenge', icon: <CreateIcon />, to: '/challenge/create' },
         ],
     },
 ]
@@ -91,7 +79,14 @@ function Sidebar(props) {
                         classes.itemCategory
                     )}
                 >
-                    Aedibus
+                    <Typography variant={'h5'}>
+                        Aedibus
+                    </Typography>
+                    <Typography variant={'body2'}>
+                        <Box fontStyle={'italic'}>
+                            challenger
+                        </Box>
+                    </Typography>
                 </ListItem>
                 {Categories.map(({ id, children }) => (
                     <React.Fragment key={id}>
