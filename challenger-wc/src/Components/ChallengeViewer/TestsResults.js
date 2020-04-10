@@ -1,5 +1,6 @@
 import React, { Fragment }  from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import PropTypes from 'prop-types'
+import { withStyles } from "@material-ui/core/styles";
 import ListSubheader from "@material-ui/core/ListSubheader";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -13,7 +14,7 @@ import Divider from '@material-ui/core/Divider'
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 import Grid from '@material-ui/core/Grid'
 
-const useStyles = makeStyles((theme) => ({
+const styles = theme => {({
     root: {
       width: '100%',
       backgroundColor: theme.palette.background.paper,
@@ -28,11 +29,10 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: 'inherit',
       padding: 0,
     },
-  }));
+  })};
 
 const TestResults = (props) => {
-    const classes = useStyles()
-    const { tests } = props
+    const { classes, tests } = props
 
     const [open, setOpen] = React.useState(true);
     const handleClick = () => {
@@ -99,3 +99,8 @@ const TestResults = (props) => {
     );
 }
 
+TestResults.propTypes = {
+    classes: PropTypes.object.isRequired,
+}
+
+export default withStyles(styles)(TestResults)

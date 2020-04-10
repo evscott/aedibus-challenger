@@ -83,9 +83,7 @@ function Sidebar(props) {
                         Aedibus
                     </Typography>
                     <Typography variant={'body2'}>
-                        <Box fontStyle={'italic'}>
-                            challenger
-                        </Box>
+                       challenger
                     </Typography>
                 </ListItem>
                 {Categories.map(({ id, children }) => (

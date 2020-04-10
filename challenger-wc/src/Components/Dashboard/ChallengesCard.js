@@ -135,7 +135,6 @@ const ChallengesCard = (props) => {
 };
 
 ChallengesCard.propTypes = {
-    challenges: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(ChallengesCard);

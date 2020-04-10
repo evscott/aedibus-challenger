@@ -4,7 +4,7 @@ import { ThemeProvider, withStyles } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Hidden from '@material-ui/core/Hidden'
 import Grid from '@material-ui/core/Grid'
-import ChallengesCard from './ChallengesCard/ChallengesCard'
+import ChallengesCard from './ChallengesCard'
 import { Header, Footer, Sidebar } from '../Shared/Layouts'
 import AddIcon from "@material-ui/icons/Add";
 import Fab from "@material-ui/core/Fab";
@@ -56,8 +56,8 @@ function Dashboard(props) {
                     <Header/>
                     <main className={classes.main}>
                         <Grid container>
-                            <Grid item lg={3} md={2} xs={1}/>
-                            <Grid item lg={6} md={8} xs={12}>
+                            <Grid item lg={3} md={4} xs={1}/>
+                            <Grid item lg={6} md={6} xs={10}>
                                 <ChallengesCard/>
                             </Grid>
                             <Grid item lg={3} md={2} xs={1}/>

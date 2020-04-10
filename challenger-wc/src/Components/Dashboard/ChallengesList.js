@@ -49,7 +49,7 @@ const ChallengeList = (props) => {
 };
 
 ChallengeList.propTypes = {
-    challenges: PropTypes.object.isRequired,
+    challenges: PropTypes.array.isRequired,
     onSelect: PropTypes.func.isRequired,
     subHeader: PropTypes.string.isRequired,
 };
