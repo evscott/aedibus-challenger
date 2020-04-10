@@ -12,30 +12,22 @@ import TimelapseIcon from '@material-ui/icons/Timelapse';
 
 
 const useStyles = makeStyles(theme => ({
-    root: {
-        flexGrow: 1,
-        maxWidth: 752,
-    },
     title: {
         margin: theme.spacing(4, 0, 2),
     },
 }))
 
 export default props => {
-    const classes = useStyles()
     const { challenges, onSelect, subHeader } = props
 
     const getIcon = (state) => {
         switch(state) {
             case 'pending':
-                    return <FiberNewIcon style={{ color: '#0000FF' }}/>;
-                break;
+                return <FiberNewIcon/>;
             case 'running':
-                    return <TimelapseIcon style={{ color: '#FFD700' }}/>;
-                break;
+                return <TimelapseIcon style={{ color: '#FFD700' }}/>;
             case 'completed':
-                    return <CheckCircleIcon style={{ color: '#00c400' }}/>;
-                break;
+                return <CheckCircleIcon style={{ color: '#00c400' }}/>;
             default:
                 return "Error occured"
         }
@@ -50,7 +42,7 @@ export default props => {
             {challenges.map(({ id, name, state }) => (
                         <Fragment key={id}>
                             <ListItem key={id} button onClick={() => onSelect(name)}>
-                                <ListItemIcon className={classes.itemIcon}>
+                                <ListItemIcon >
                                     {getIcon(state)}
                                 </ListItemIcon>
                                 <ListItemText>{name}</ListItemText>

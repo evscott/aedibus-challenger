@@ -16,9 +16,11 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from '@material-ui/core/Typography'
 import SendIcon from '@material-ui/icons/Send';
 import Fab from "@material-ui/core/Fab";
+import TestResults from './TestsResults'
 import Instructions from './Instructions'
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 
 let theme = createMuiTheme({
     palette: {
@@ -182,13 +184,84 @@ const styles = {
     },
 }
 
+const tests = [
+    {
+        name: 'Test one',
+        time: 0.3,
+        failure: false,
+        message: '',
+    },
+    {
+        name: 'Challenge two',
+        time: 0.5,
+        failure: true,
+        message: 'A descriptive message about this utter failure',
+    },
+    {
+        name: 'Challenge three',
+        time: 0.01,
+        failure: false,
+        message: 'Challenge one',
+    },
+]
+
 function ChallengeViewer(props) {
     const { classes } = props
 
-    const [value, setValue] = React.useState(0);
-    const handleChange = (event, newValue) => {
-      setValue(newValue);
-    };
+    const [focusResults, toggleFocus] = React.useState(0);
+    const toggleFocusResults = (event, newValue) => {
+        toggleFocus(newValue);
+    }
+
+    const getLeftAppbar = () => {
+        return (
+            <AppBar position="relative" color="default">
+                <Toolbar>
+                    <Typography variant={'h6'} color={'textSecondary'}>
+                        Attempt.java
+                    </Typography> 
+                </Toolbar>
+            </AppBar>
+        )
+    }
+
+    const getRightAppbar = () => {
+        return (
+            <AppBar position="relative" color="default">
+                <Toolbar>
+                    <Tabs
+                        value={focusResults}
+                        onChange={toggleFocusResults}
+                        indicatorColor="primary"
+                        textColor="primary"
+                        >
+                        <Tab label="README.md" />
+                        <Tab label="Tests" />
+                    </Tabs>
+                </Toolbar>
+            </AppBar>
+        );
+    }
+
+    const getRightContent = () => {
+        if (focusResults)
+            return <TestResults tests={tests} />
+        return <Instructions/>
+    }
+
+    const getButton = () => {
+        if(true)
+            return (
+                <Fab className={classes.fab} color="primary" onClick={() => {}}>
+                    <SendIcon />
+                </Fab>
+            );
+        return (
+            <Fab className={classes.fab} color="primary" onClick={() => {}}>
+                <DeleteOutlineIcon />
+            </Fab>
+        );
+    }
 
     return (
         <ThemeProvider theme={theme}>
@@ -210,40 +283,18 @@ function ChallengeViewer(props) {
                             {/* Code Editor */}
                             <Grid item lg={6} md={12} xs={12}>
                                 <Paper className={classes.CodeMirror}>
-                                    <AppBar position="relative" color="default">
-                                        <Toolbar>
-                                            <Grid container>
-                                                <Typography variant={'h6'} color={'textSecondary'}>
-                                                        Attempt.java
-                                                </Typography>                                      
-                                            </Grid>
-                                        </Toolbar>
-                                    </AppBar>
+                                    {getLeftAppbar()}
                                     <Editor mode={'javascript'} value={'const main = () => console.log("Hello!");'} />
                                 </Paper>
                             </Grid>
                             <Grid item lg={6} md={12} xs={12}>
                                 <Paper className={classes.InstructionsPaper}>
-                                    <AppBar position="relative" color="default">
-                                        <Toolbar>
-                                            <Tabs
-                                                value={value}
-                                                onChange={handleChange}
-                                                indicatorColor="primary"
-                                                textColor="primary"
-                                            >
-                                                <Tab label="README.md" />
-                                                <Tab label="TestResults" />
-                                            </Tabs>
-                                        </Toolbar>
-                                    </AppBar>
-                                    <Instructions/>
+                                    {getRightAppbar()}
+                                    {getRightContent()}
                                 </Paper>
                             </Grid>
                         </Grid>
-                        <Fab className={classes.fab} color="primary" onClick={() => {}}>
-                            <SendIcon />
-                        </Fab>
+                        {getButton()}
                     </main>
                     <Footer />
                 </div>
