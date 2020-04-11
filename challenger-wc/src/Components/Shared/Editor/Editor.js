@@ -1,11 +1,11 @@
 import React from 'react'
 import { UnControlled as CodeMirror } from 'react-codemirror2'
 import 'codemirror/lib/codemirror.css'
+import PropTypes from 'prop-types'
+import './Editor.css'
 require('codemirror/mode/javascript/javascript')
 require('codemirror/mode/markdown/markdown')
 require('codemirror/theme/material.css')
-import PropTypes from 'prop-types'
-import './Editor.css'
 
 function Editor(props)  {
     const { value, mode, handleChange } = props;

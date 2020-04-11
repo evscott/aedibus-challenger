@@ -14,7 +14,7 @@ import Divider from '@material-ui/core/Divider'
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 import Grid from '@material-ui/core/Grid'
 
-const styles = theme => {({
+const styles = theme => ({
     root: {
       width: '100%',
       backgroundColor: theme.palette.background.paper,
@@ -29,7 +29,7 @@ const styles = theme => {({
       backgroundColor: 'inherit',
       padding: 0,
     },
-  })};
+  });
 
 const TestResults = (props) => {
     const { classes, tests } = props
