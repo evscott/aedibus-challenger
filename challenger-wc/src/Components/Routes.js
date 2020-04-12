@@ -1,22 +1,22 @@
 import React from 'react'
-import { Switch, Route } from 'react-router-dom'
-import LandingPage from './LandingPage/LandingPage'
-import Dashboard from './Dashboard/Dashboard'
+import { Route, Redirect, Switch } from 'react-router-dom';
 import ChallengeViewer from './ChallengeViewer/ChallengeViewer'
 import ChallengeCreator from './ChallengeCreator/ChallengeCreator'
+import LandingPageContainer from './LandingPage/LandingPageContainer'
+import DashboardContainer from './Dashboard/DashboardContainer';
 
-// const AuthenticatedRoute = ({ component: Component, ...rest}) => {
-//     return <Route
-//         {...rest}
-//         render={props => localStorage.getItem("token") ? <Component {...props}/> : <Redirect to={'/'}/>}
-//     />
-// };
+const AuthenticatedRoute = ({ component: Component, ...rest}) => {
+    return <Route
+        {...rest}
+        render={props => localStorage.getItem("ac-token") ? <Component {...props}/> : <Redirect to={'/'}/>}
+    />
+};
 
 export default () => (
     <Switch>
-        <Route exact path={'/'} component={LandingPage} />
-        <Route exact path={'/home'} component={Dashboard} />
-        <Route exact path={'/challenge'} component={ChallengeViewer} />
-        <Route exact path={'/challenge/create'} component={ChallengeCreator} />
+        <Route exact path={'/'} component={LandingPageContainer} />
+        <AuthenticatedRoute exact path={'/home'} component={DashboardContainer} />
+        <AuthenticatedRoute exact path={'/challenge'} component={ChallengeViewer} />
+        <AuthenticatedRoute exact path={'/challenge/create'} component={ChallengeCreator} />
     </Switch>
 )

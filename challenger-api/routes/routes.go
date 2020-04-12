@@ -34,11 +34,11 @@ func (c *Config) User() *chi.Mux {
 	router := chi.NewRouter()
 	router.Use(VerifyToken)
 
-	router.Post("/challenge", c.Handlers.CreateChallenge)
-	router.Get("/challenge", c.Handlers.GetChallenges)
+	router.Post("/challenges", c.Handlers.CreateChallenge)
+	router.Get("/challenges", c.Handlers.GetChallenges)
 	router.Get("/challenge/{id}/{fileType}", c.Handlers.GetChallengeFile)
-	router.Delete("/challenge/{id}", c.Handlers.DeleteChallenge)
-	router.Get("/challenge/{id}/results", c.Handlers.GetChallengeResults)
+	router.Delete("/challenges/{id}", c.Handlers.DeleteChallenge)
+	router.Get("/challenges/{id}/results", c.Handlers.GetChallengeResults)
 	router.Delete("/user", c.Handlers.DeleteUser)
 	router.Post("/attempt", c.Handlers.AttemptChallenge)
 

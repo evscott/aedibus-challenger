@@ -20,6 +20,15 @@ const styles = (theme) => ({
 const ChallengeList = (props) => {
     const { challenges, onSelect, subHeader } = props;
 
+    console.log('ChallengesList', challenges)
+
+    const getChallengeDescription = (challengerID, creatorID) => {
+        console.log('getting description', challengerID, creatorID)
+        if (subHeader === "received")
+            return `Challenge from ${creatorID}`
+        return `Challenge for ${challengerID}`
+    } 
+
     const getIcon = (state) => {
         switch (state) {
             case "pending":
@@ -35,11 +44,11 @@ const ChallengeList = (props) => {
 
     return (
         <List subheader={<ListSubheader>{subHeader}</ListSubheader>}>
-            {challenges.map(({ id, name, state }) => (
+            {challenges.map(({ id, challengerID, creatorID, state }) => (
                 <Fragment key={id}>
-                    <ListItem key={id} button onClick={() => onSelect(name)}>
-                        <ListItemIcon>{getIcon(state)}</ListItemIcon>
-                        <ListItemText>{name}</ListItemText>
+                    <ListItem key={id} button onClick={() => onSelect()}>
+                        <ListItemIcon> {getIcon(state)} </ListItemIcon>
+                        <ListItemText> {getChallengeDescription(challengerID, creatorID)} </ListItemText>
                     </ListItem>
                     <Divider light />
                 </Fragment>

@@ -10,11 +10,15 @@ import (
 )
 
 func (c *Config) SignUp(w http.ResponseWriter, r *http.Request) {
+	fmt.Printf("Hitting signup\n")
+
 	user := &models.User{}
 	err := decodeRequestBody(user, r)
 	if err != nil {
 		fmt.Printf("%v\n", err)
 	}
+
+	fmt.Printf("user stuff %v %v\n", user, err)
 
 	err = c.DAL.CreateUser(user)
 	if err != nil {

@@ -1,9 +1,10 @@
 package models
 
 type Challenge struct {
-	ID           string `pg:"id"`
-	ChallengerID string `pg:"challenger_id"`
-	CreatorID    string `pg:"creator_id"`
+	ID           string `json:"id",pg:"id"`
+	ChallengerID string `json:"challengerID",pg:"challenger_id"`
+	CreatorID    string `json:"creatorID",pg:"creator_id"`
+	State        string `json:"state",pg:"state"`
 }
 
 type Challenges []Challenge
@@ -12,6 +13,11 @@ type ChallengeResults struct {
 	ChallengeID string `pg:"challenge_id"`
 	TestsRan    string `pg:"tests_ran"`
 	TestsPassed string `pg:"tests_passed"`
+}
+
+type GetChallengesRes struct {
+	Received *Challenges `json:"received"`
+	Sent     *Challenges `json:"sent"`
 }
 
 type GetChallengeRes struct {

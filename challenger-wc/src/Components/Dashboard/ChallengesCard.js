@@ -38,49 +38,39 @@ const styles = (theme) => ({
     },
 });
 
-const challengesReceived = [
-    {
-        id: 0,
-        name: "Challenge one",
-        state: "completed",
-    },
-    {
-        id: 1,
-        name: "Challenge two",
-        state: "running",
-    },
-    {
-        id: 2,
-        name: "Challenge three",
-        state: "pending",
-    },
-];
-
-const challengesSent = [
-    {
-        id: 0,
-        name: "Challenge one",
-        state: "pending",
-    },
-    {
-        id: 1,
-        name: "Challenge two",
-        state: "pending",
-    },
-    {
-        id: 2,
-        name: "Challenge three",
-        state: "pending",
-    },
-];
-
 const ChallengesCard = (props) => {
-    const { classes } = props;
+    const { classes, received, sent } = props;
+
+    console.log('ChallengesCard', received, sent)
+
     const history = useHistory();
 
     const onSelect = () => {
         history.push("/challenge");
     };
+
+    const getReceivedChallenges = () => {
+        if (received)
+            return (
+                <ChallengeList
+                    challenges={received}
+                    onSelect={onSelect}
+                    subHeader={"received"}
+                />
+            );
+    }
+
+    const getSentChallenges = () => {
+        if (sent)
+            return (
+                <ChallengeList
+                    challenges={sent}
+                    onSelect={onSelect}
+                    subHeader={"sent"}
+                />
+            );
+    }
+
 
     return (
         <Paper className={classes.paper}>
@@ -118,16 +108,8 @@ const ChallengesCard = (props) => {
                     lg={12}
                     className={classes.contentWrapper}
                 >
-                    <ChallengeList
-                        challenges={challengesReceived}
-                        onSelect={onSelect}
-                        subHeader={"received"}
-                    />
-                    <ChallengeList
-                        challenges={challengesSent}
-                        onSelect={onSelect}
-                        subHeader={"sent"}
-                    />
+                    {getReceivedChallenges()}
+                    {getSentChallenges()}
                 </Grid>
             </Grid>
         </Paper>
@@ -135,6 +117,8 @@ const ChallengesCard = (props) => {
 };
 
 ChallengesCard.propTypes = {
+    received: PropTypes.array.isRequired,
+    sent: PropTypes.array.isRequired,
 };
 
 export default withStyles(styles)(ChallengesCard);

@@ -8,6 +8,7 @@ import (
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/render"
+	"github.com/rs/cors"
 )
 
 func Routes() *chi.Mux {
@@ -42,5 +43,6 @@ func main() {
 	router := Routes()
 	printRoutes(router)
 
-	log.Fatal(http.ListenAndServe(":3030", router))
+	handler := cors.AllowAll().Handler(router)
+	log.Fatal(http.ListenAndServe(":2020", handler))
 }

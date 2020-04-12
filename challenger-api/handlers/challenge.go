@@ -51,17 +51,26 @@ func (c *Config) CreateChallenge(w http.ResponseWriter, r *http.Request) {
 
 func (c *Config) GetChallenges(w http.ResponseWriter, r *http.Request) {
 	userID := r.Context().Value("userID").(string)
-	challenges, err := c.DAL.GetChallenges(userID)
+
+	getReceivedChallengesRes, err := c.DAL.GetReceivedChallenges(userID)
 	if err != nil {
 		fmt.Printf("%v\n", err)
 	}
 
-	render.JSON(w, r, challenges)
+	getSentChallengesRes, err := c.DAL.GetSentChallenges(userID)
+	if err != nil {
+		fmt.Printf("%v\n", err)
+	}
+
+	getChallengesRes := &models.GetChallengesRes{
+		Received: getReceivedChallengesRes,
+		Sent:     getSentChallengesRes,
+	}
+
+	render.JSON(w, r, getChallengesRes)
 }
 
 func (c *Config) GetChallengeFile(w http.ResponseWriter, r *http.Request) {
-	userID := r.Context().Value("userID").(string)
-
 	challengeID, err := getURLQuery("id", r)
 	if err != nil {
 		fmt.Printf("%v\n", err)
@@ -81,7 +90,7 @@ func (c *Config) GetChallengeFile(w http.ResponseWriter, r *http.Request) {
 		ID: challengeID,
 	}
 
-	err = c.DAL.GetChallenge(challenge, userID)
+	err = c.DAL.GetChallenge(challenge)
 	if err != nil {
 		fmt.Printf("%v\n", err)
 	}
@@ -130,6 +139,11 @@ func (c *Config) AttemptChallenge(w http.ResponseWriter, r *http.Request) {
 	client := &http.Client{}
 	_, err = client.Do(request)
 	if err != nil {
+		fmt.Print(err)
+	}
+
+	// Set challenge state to 'running'
+	if err := c.DAL.SetChallengeToRunning(challengeID); err != nil {
 		fmt.Print(err)
 	}
 

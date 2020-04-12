@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
         margin: theme.spacing(1),
     },
     form: {
-        width: '100%', // Fix IE 11 issue.
+        width: '100%',
         marginTop: theme.spacing(1),
     },
     submit: {
@@ -34,8 +34,19 @@ const useStyles = makeStyles(theme => ({
 
 export default function SignIn(props) {
     const history = useHistory()
-    const { toggleSignUp } = props
+    const { toggleSignUp, handleSignIn } = props
     const classes = useStyles()
+
+    const [email, setEmail] = React.useState('');
+    const [password, setPassword] = React.useState('');
+
+    const handleEmailChange = (event) => {
+        setEmail(event.target.value)
+    }
+
+    const handlePasswordChange = (event) => {
+        setPassword(event.target.value)
+    }
 
     return (
         <Container component="main" maxWidth="xs">
@@ -57,6 +68,8 @@ export default function SignIn(props) {
                         label="Email Address"
                         name="email"
                         autoComplete="email"
+                        value={email}
+                        onChange={handleEmailChange}
                         autoFocus
                     />
                     <TextField
@@ -69,6 +82,8 @@ export default function SignIn(props) {
                         href="/"
                         type="password"
                         id="password"
+                        value={password}
+                        onChange={handlePasswordChange}
                         autoComplete="current-password"
                     />
                     <FormControlLabel
@@ -76,12 +91,11 @@ export default function SignIn(props) {
                         label="Remember me"
                     />
                     <Button
-                        type="submit"
                         fullWidth
                         variant="contained"
                         color="primary"
                         className={classes.submit}
-                        onClick={() => history.push('/home')}
+                        onClick={() => handleSignIn(email, password)}
                     >
                         Sign In
                     </Button>

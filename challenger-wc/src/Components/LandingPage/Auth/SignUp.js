@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
         margin: theme.spacing(1),
     },
     form: {
-        width: '100%', // Fix IE 11 issue.
+        width: '100%',
         marginTop: theme.spacing(3),
     },
     submit: {
@@ -30,8 +30,24 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default function SignUp(props) {
-    const { toggleSignUp } = props
+    const { toggleSignUp, handleSignUp } = props
     const classes = useStyles()
+
+    const [name, setName] = React.useState('');
+    const [email, setEmail] = React.useState('');
+    const [password, setPassword] = React.useState('');
+
+    const handleNameChange = (event) => {
+        setName(event.target.value);
+    }
+
+    const handleEmailChange = (event) => {
+        setEmail(event.target.value)
+    }
+
+    const handlePasswordChange = (event) => {
+        setPassword(event.target.value)
+    }
 
     return (
         <Container component="main" maxWidth="xs">
@@ -45,27 +61,18 @@ export default function SignUp(props) {
                 </Typography>
                 <form className={classes.form} noValidate>
                     <Grid container spacing={2}>
-                        <Grid item xs={12} sm={6}>
+                        <Grid item xs={12}>
                             <TextField
-                                autoComplete="fname"
-                                name="firstName"
+                                autoComplete="name"
+                                name="name"
                                 variant="outlined"
                                 required
                                 fullWidth
-                                id="firstName"
-                                label="First Name"
+                                id="name"
+                                label="Name"
+                                value={name}
+                                onChange={handleNameChange}
                                 autoFocus
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                variant="outlined"
-                                required
-                                fullWidth
-                                id="lastName"
-                                label="Last Name"
-                                name="lastName"
-                                autoComplete="lname"
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -76,6 +83,8 @@ export default function SignUp(props) {
                                 id="email"
                                 label="Email Address"
                                 name="email"
+                                value={email}
+                                onChange={handleEmailChange}
                                 autoComplete="email"
                             />
                         </Grid>
@@ -88,16 +97,18 @@ export default function SignUp(props) {
                                 label="Password"
                                 type="password"
                                 id="password"
+                                value={password}
+                                onChange={handlePasswordChange}
                                 autoComplete="current-password"
                             />
                         </Grid>
                     </Grid>
                     <Button
-                        type="submit"
                         fullWidth
                         variant="contained"
                         color="primary"
                         className={classes.submit}
+                        onClick={() => handleSignUp(name, email, password)}
                     >
                         Sign Up
                     </Button>
